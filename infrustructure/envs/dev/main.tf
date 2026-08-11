@@ -20,3 +20,14 @@ provider "aws" {
 resource "aws_s3_bucket" "tags_standards_bucket_resource" {
   bucket = "aws-aws-skillsbuilder-rerun-again"
 }
+
+# Moved statefile to remote backend s3
+terraform {
+  backend "s3" {
+    bucket         = "aws-aws-skillsbuilder-rerun-again"
+    key            = "rerun/s3/terraform.tfstate"
+    region         = "af-south-1"
+    encrypt        = true
+    use_lockfile   = true # Native S3 locking for Terraform 1.10+
+  }
+}
